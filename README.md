@@ -60,8 +60,8 @@ Grafo G y valor k ──► construir complemento Ḡ ──► transformar k' =
 
 ## Estado del proyecto
 
-- [x] Estructura del repositorio y reglas del equipo
-- [ ] `Grafo` — Int. 1
+- [X] Estructura del repositorio y reglas del equipo
+- [X] `Grafo` — Int. 1
 - [ ] `Reduccion` y `GeneradorGrafos` — James God
 - [ ] Menú `Main` y validación — James Gog
 - [ ] `ResolvedorClique`, `ResolvedorVertexCover`, `Verificador` — Emanuel Encalada
