@@ -18,7 +18,7 @@ import java.util.List;
  *     Por eso la matriz siempre es simétrica (espejo respecto a la diagonal).
  *   - NO tiene lazos: un vértice nunca se conecta consigo mismo (diagonal en 0).
  *
- *   - Emanuel usaras hayArista() y getAristas() para comprobar soluciones.
+ *   - Emanuel usa hayArista() y getAristas() para comprobar soluciones.
  */
 public class Grafo {
 

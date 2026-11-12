@@ -30,10 +30,10 @@ Grafo G y valor k ──► construir complemento Ḡ ──► transformar k' =
 
 | # | Integrante | Responsabilidad |
 |---|---|---|
-| 1 | [James Caiño] | Núcleo de la reducción (`Grafo`, `Reduccion`), generador de grafos, menú, validación e integración |
-| 2 | [Emanuel Encalada] | Algoritmos de CLIQUE y VERTEX COVER, verificador y pruebas de equivalencia |
-| 3 | [Eduardo Fogacho] | Análisis de complejidad, medición de tiempos y experimentos |
-| 4 | [Kevin Ramirez] | Fundamentos teóricos, NotebookLM, informe final y presentación |
+| 1 | James Caiño | Núcleo de la reducción (`Grafo`, `Reduccion`), generador de grafos, menú, validación e integración |
+| 2 | Emanuel Encalada | Algoritmos de CLIQUE y VERTEX COVER, verificador y pruebas de equivalencia |
+| 3 | Eduardo Fogacho | Análisis de complejidad, medición de tiempos y experimentos |
+| 4 | Kevin Ramirez | Fundamentos teóricos, NotebookLM, informe final y presentación |
 
 ---
 
@@ -62,8 +62,8 @@ Grafo G y valor k ──► construir complemento Ḡ ──► transformar k' =
 
 - [X] Estructura del repositorio y reglas del equipo
 - [X] `Grafo` — Int. 1
-- [ ] `Reduccion` y `GeneradorGrafos` — James God
-- [ ] Menú `Main` y validación — James Gog
+- [X] `Reduccion` y `GeneradorGrafos` — James God
+- [ ] Menú `Main` y validación — James Caiño
 - [ ] `ResolvedorClique`, `ResolvedorVertexCover`, `Verificador` — Emanuel Encalada
 - [ ] Pruebas de equivalencia — Emanuel Encalada
 - [ ] `Benchmark` y experimentos — Eduardo Fogacho
