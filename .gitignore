@@ -1,0 +1,18 @@
+#Archivos compilados de Java 
+bin/
+out/
+*.class
+
+#Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Configuración personal de editores
+.vscode/*
+!.vscode/settings.json
+.idea/
+*.iml
+
+#Temporales
+~$*
