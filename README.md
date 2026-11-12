@@ -2,12 +2,13 @@
 
 **Proyecto Integrador — Unidad 2: Complejidad Computacional**
 Asignatura: Estructura de Datos y Algoritmos II · Grupo 6 · Tema 7
+Lenguaje: Java (estándar, sin bibliotecas externas)
 
 ---
 
 ## ¿Qué hace este proyecto?
 
-Creamos una herramienta en Java que transforma una instancia del problema CLIQUE en una instancia equivalente de VERTEX COVER y comprueba que ambas tienen la misma respuesta .
+Creamos una herramienta en Java que transforma una instancia del problema CLIQUE en una instancia equivalente de VERTEX COVER y comprueba que ambas tienen la misma respuesta (SÍ/NO).
 
 La reducción se basa en este resultado:
 
@@ -41,7 +42,7 @@ Grafo G y valor k ──► construir complemento Ḡ ──► transformar k' =
 
 ```
 ├── src/
-│   ├── app/            Menú principal (Main)
+│   ├── app/            Menú principal (Main) y demos de prueba
 │   ├── modelo/         Grafo con matriz de adyacencia
 │   ├── reduccion/      Transformación CLIQUE → VERTEX COVER
 │   ├── util/           Generador de grafos y validación de entradas
@@ -58,23 +59,43 @@ Grafo G y valor k ──► construir complemento Ḡ ──► transformar k' =
 
 ---
 
+## Cómo empezar (primera vez)
+
+1. Instala **Git**: https://git-scm.com/download/win
+2. Instala **Java Temurin 25 LTS**: https://adoptium.net (activa la opción *Set JAVA_HOME variable*).
+3. Instala **Visual Studio Code**: https://code.visualstudio.com y, dentro de él, la extensión **Extension Pack for Java** (Microsoft).
+4. En VS Code: `Ctrl + Shift + P` → **Git: Clone** → pega la URL de este repositorio.
+5. **Lee [CONTRIBUTING.md](CONTRIBUTING.md) antes de programar.**
+
+---
+
+## Cómo ejecutar
+
+**Desde VS Code:** abrir `src/app/Main.java` y presionar **Run** encima de `main`.
+
+**Desde la terminal (PowerShell, en la carpeta del proyecto):**
+```powershell
+javac -d bin (Get-ChildItem -Recurse src -Filter *.java).FullName
+java -cp bin app.Main
+```
+
+**Desde la terminal (Mac/Linux):**
+```bash
+javac -d bin $(find src -name "*.java")
+java -cp bin app.Main
+```
+
+Demos rápidas (sin menú): `app.DemoGrafo` y `app.DemoReduccion`.
+
+---
+
 ## Estado del proyecto
 
-- [X] Estructura del repositorio y reglas del equipo
-- [X] `Grafo` — Int. 1
-- [X] `Reduccion` y `GeneradorGrafos` — James God
-- [X] Menú `Main` y validación — James Caiño
+- [x] Estructura del repositorio y reglas del equipo — James Caiño
+- [x] `Grafo` — James Caiño
+- [x] `Reduccion` y `GeneradorGrafos` — James Caiño
+- [ ] Menú `Main` y `Validador` — James Caiño (listo; falta la opción 6, que se completa al integrar el trabajo de Emanuel)
 - [ ] `ResolvedorClique`, `ResolvedorVertexCover`, `Verificador` — Emanuel Encalada
 - [ ] Pruebas de equivalencia — Emanuel Encalada
 - [ ] `Benchmark` y experimentos — Eduardo Fogacho
 - [ ] Informe y presentación — Kevin Ramirez
-
-   ## Cómo ejecutar
-
-   **Desde VS Code:** abrir `src/app/Main.java` y presionar **Run** encima de `main`.
-
-   **Desde la terminal (PowerShell, en la carpeta del proyecto):**
-   ```powershell
-   javac -d bin (Get-ChildItem -Recurse src -Filter *.java).FullName
-   java -cp bin app.Main
-   ```
