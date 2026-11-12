@@ -63,8 +63,18 @@ Grafo G y valor k ──► construir complemento Ḡ ──► transformar k' =
 - [X] Estructura del repositorio y reglas del equipo
 - [X] `Grafo` — Int. 1
 - [X] `Reduccion` y `GeneradorGrafos` — James God
-- [ ] Menú `Main` y validación — James Caiño
+- [X] Menú `Main` y validación — James Caiño
 - [ ] `ResolvedorClique`, `ResolvedorVertexCover`, `Verificador` — Emanuel Encalada
 - [ ] Pruebas de equivalencia — Emanuel Encalada
 - [ ] `Benchmark` y experimentos — Eduardo Fogacho
 - [ ] Informe y presentación — Kevin Ramirez
+
+   ## Cómo ejecutar
+
+   **Desde VS Code:** abrir `src/app/Main.java` y presionar **Run** encima de `main`.
+
+   **Desde la terminal (PowerShell, en la carpeta del proyecto):**
+   ```powershell
+   javac -d bin (Get-ChildItem -Recurse src -Filter *.java).FullName
+   java -cp bin app.Main
+   ```
