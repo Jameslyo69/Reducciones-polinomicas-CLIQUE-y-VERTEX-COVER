@@ -14,7 +14,6 @@ public class GeneradorGrafos {
     // No se crean objetos de esta clase: sus métodos se usan así: GeneradorGrafos.metodo(...)
     private GeneradorGrafos() {
     }
-
     /**
      * Crea un grafo al azar con n vértices.
      * - densidad: probabilidad de que exista cada arista (0.0 = ninguna, 1.0 = todas).
