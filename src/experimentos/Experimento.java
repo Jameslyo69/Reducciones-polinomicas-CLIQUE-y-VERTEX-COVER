@@ -19,9 +19,9 @@ import util.GeneradorGrafos;
  */
 public final class Experimento {
 
-    private static final int[] TAMANOS = {8, 12, 16, 20, 24};
+    private static final int[] TAMANOS = {10, 20, 30, 40, 50};
     private static final double DENSIDAD = 0.8;
-    private static final long SEMILLA = 1;
+    private static final long SEMILLA = 10;
     private static final int CALENTAMIENTOS = 5;
     private static final int REPETICIONES = 15;
     private static final Path SALIDA = Path.of("resultados", "experimento.csv");
