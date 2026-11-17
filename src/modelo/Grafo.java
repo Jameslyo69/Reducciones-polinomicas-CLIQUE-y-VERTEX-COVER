@@ -22,15 +22,11 @@ import java.util.List;
  */
 public class Grafo {
 
-
     // ATRIBUTOS
-
     /** Cantidad de vértices (|V|). Es "final" porque no cambia después de crear el grafo. */
     private final int n;
-
     /** La matriz de adyacencia: adyacencia[u][v] es true si existe la arista u-v. */
     private final boolean[][] adyacencia;
-
     /**
      * Cantidad de aristas (|E|). Se suma 1 al agregar y se resta 1 al eliminar,
      * así siempre está actualizada y no hay que contar la matriz completa cada vez.

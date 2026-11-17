@@ -5,6 +5,12 @@ import modelo.Grafo;
 import reduccion.Reduccion;
 import util.GeneradorGrafos;
 import util.Validador;
+import algoritmos.ResolvedorClique;
+import algoritmos.ResolvedorVertexCover;
+import algoritmos.Verificador;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Programa principal
@@ -21,6 +27,9 @@ public class Main {
 
     /** Máximo de vértices para grafos aleatorios (la matriz de 2000 × 2000 ocupa unos 4 MB). */
     private static final int MAX_N_ALEATORIO = 2000;
+
+    /** Máximo de vértices para resolver los problemas: los algoritmos exactos son exponenciales. */
+    private static final int MAX_N_RESOLVER = 25;
 
     /** Hasta este tamaño se imprime la matriz completa; con más vértices solo se muestra un resumen. */
     private static final int MAX_N_MOSTRAR = 20;
@@ -137,14 +146,87 @@ public class Main {
         System.out.println("=== INSTANCIA DE VERTEX COVER: (complemento de G, k' = " + n + " - " + k + " = " + kPrima + ") ===");
         mostrarGrafo(complemento);
         System.out.printf("Tiempo de la reducción: %.4f ms  (complejidad Theta(n^2))%n", (fin - inicio) / 1_000_000.0);
-        System.out.println("Pregunta equivalente: ¿G tiene un clique de tamaño >= " + k
-                + "?  <=>  ¿el complemento tiene una cobertura de tamaño <= " + kPrima + "?");
     }
 
-    /** Opción 6: se completa al integrar el trabajo del Integrante 2. */
+    /**
+     * Opción 6: resuelve CLIQUE(G, k) y VERTEX COVER(complemento, n - k),
+     * verifica cada solución encontrada y comprueba que las respuestas SÍ/NO coincidan.
+     * Solo se mide el tiempo de los algoritmos (no la lectura de datos ni la impresión).
+     */
     private static void resolverYComparar() {
-        System.out.println("Esta opción estará disponible cuando se integren los algoritmos");
-        System.out.println("de CLIQUE y VERTEX COVER (Integrante 2).");
+        if (!hayGrafo()) {
+            return;
+        }
+        int n = grafoActual.getN();
+        if (n > MAX_N_RESOLVER) {
+            System.out.println("[X] El grafo tiene " + n + " vértices. Para resolver use como máximo "
+                    + MAX_N_RESOLVER + " (los algoritmos exactos tardan un tiempo exponencial).");
+            return;
+        }
+        int k = Validador.leerEntero(sc, "Tamaño de clique buscado k (1 a " + n + "): ", 1, n);
+
+        // 1) Reducción: (G, k) -> (complemento, k').
+        Grafo complemento = Reduccion.construirComplemento(grafoActual);
+        int kPrima = Reduccion.transformarK(n, k);
+
+        // 2) Resolver CLIQUE en G (midiendo solo el algoritmo).
+        long t0 = System.nanoTime();
+        List<Integer> clique = ResolvedorClique.buscarClique(grafoActual, k);
+        long t1 = System.nanoTime();
+
+        // 3) Resolver VERTEX COVER en el complemento (midiendo solo el algoritmo).
+        long t2 = System.nanoTime();
+        List<Integer> cobertura = ResolvedorVertexCover.buscarCobertura(complemento, kPrima);
+        long t3 = System.nanoTime();
+
+        boolean respuestaClique = (clique != null);
+        boolean respuestaCobertura = (cobertura != null);
+
+        // 4) Mostrar resultados.
+        System.out.println();
+        System.out.println("=== CLIQUE en G con k = " + k + " ===");
+        if (respuestaClique) {
+            System.out.println("Respuesta: SÍ. Clique encontrado: " + clique);
+            System.out.println("Verificación (¿todos conectados entre sí?): "
+                    + (Verificador.esClique(grafoActual, clique, k) ? "correcta" : "INCORRECTA"));
+        } else {
+            System.out.println("Respuesta: NO existe un clique de tamaño >= " + k + ".");
+        }
+        System.out.printf("Tiempo: %.4f ms%n", (t1 - t0) / 1_000_000.0);
+
+        System.out.println();
+        System.out.println("=== VERTEX COVER en el complemento con k' = " + kPrima + " ===");
+        if (respuestaCobertura) {
+            System.out.println("Respuesta: SÍ. Cobertura encontrada: " + cobertura);
+            System.out.println("Verificación (¿cubre todas las aristas?): "
+                    + (Verificador.esCobertura(complemento, cobertura, kPrima) ? "correcta" : "INCORRECTA"));
+        } else {
+            System.out.println("Respuesta: NO existe una cobertura de tamaño <= " + kPrima + ".");
+        }
+        System.out.printf("Tiempo: %.4f ms%n", (t3 - t2) / 1_000_000.0);
+
+        // 5) Relación entre las dos soluciones: los vértices FUERA del clique forman una cobertura.
+        if (respuestaClique) {
+            List<Integer> fuera = new ArrayList<>();
+            for (int v = 0; v < n; v++) {
+                if (!clique.contains(v)) {
+                    fuera.add(v);
+                }
+            }
+            System.out.println();
+            System.out.println("Vértices fuera del clique (V - clique): " + fuera
+                    + " -> ¿son cobertura del complemento? "
+                    + (Verificador.esCobertura(complemento, fuera, n - clique.size()) ? "SÍ" : "NO"));
+        }
+
+        // 6) Conclusión: la reducción es correcta si ambas respuestas coinciden.
+        System.out.println();
+        if (respuestaClique == respuestaCobertura) {
+            System.out.println("[OK] Las respuestas COINCIDEN (" + (respuestaClique ? "SÍ" : "NO")
+                    + "): la reducción preserva la respuesta.");
+        } else {
+            System.out.println("[X] Las respuestas NO coinciden: revisar los algoritmos.");
+        }
     }
 
     /** Opción 7: muestra un resumen de la complejidad de cada parte. */
@@ -161,7 +243,7 @@ public class Main {
         System.out.println("Conclusión: transformar es barato (polinómico); resolver es caro (exponencial).");
     }
 
-    // Métodos de apoyo 
+    // Métodos de apoyo
 
     /** Devuelve true si ya hay un grafo cargado; si no, avisa al usuario. */
     private static boolean hayGrafo() {
