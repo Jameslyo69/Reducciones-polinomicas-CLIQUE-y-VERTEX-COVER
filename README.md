@@ -34,7 +34,7 @@ Grafo G y valor k ──► construir complemento Ḡ ──► transformar k' =
 | 1 | James Caiño | Núcleo de la reducción (`Grafo`, `Reduccion`), generador de grafos, menú, validación e integración |
 | 2 | Emanuel Encalada | Algoritmos de CLIQUE y VERTEX COVER, verificador y pruebas de equivalencia |
 | 3 | Eduardo Fogacho | Análisis de complejidad, medición de tiempos y experimentos |
-| 4 | Kevin Ramirez | Fundamentos teóricos, NotebookLM, informe final y presentación |
+| 4 | Matías Chushig | Fundamentos teóricos, NotebookLM, informe final y presentación |
 
 ---
 
@@ -42,14 +42,14 @@ Grafo G y valor k ──► construir complemento Ḡ ──► transformar k' =
 
 ```
 ├── src/
-│   ├── app/            Menú principal (Main) y demos de prueba
-│   ├── modelo/         Grafo con matriz de adyacencia
-│   ├── reduccion/      Transformación CLIQUE → VERTEX COVER
-│   ├── util/           Generador de grafos y validación de entradas
-│   ├── algoritmos/     Resolvedores exactos y verificador
-│   ├── pruebas/        Pruebas de equivalencia de la reducción
-│   └── experimentos/   Medición de tiempos y experimentos
-├── resultados/         Resultados experimentales (CSV, gráficas)
+│   ├── app/            Main (menú), DemoGrafo, DemoReduccion
+│   ├── modelo/         Grafo (matriz de adyacencia)
+│   ├── reduccion/      Reduccion (complemento y k' = n − k)
+│   ├── util/           GeneradorGrafos, Validador
+│   ├── algoritmos/     ResolvedorClique, ResolvedorVertexCover, Verificador, Resolvedor
+│   ├── pruebas/        PruebasFuncionales, PruebasEquivalencia, OraculoExhaustivo, ResultadoPruebas
+│   └── experimentos/   Experimento (medición de tiempos)
+├── resultados/         experimento.csv e instrucciones de los experimentos
 ├── docs/
 │   ├── informe/        Secciones del informe técnico
 │   └── diagramas/      Diagramas de flujo
@@ -71,31 +71,40 @@ Grafo G y valor k ──► construir complemento Ḡ ──► transformar k' =
 
 ## Cómo ejecutar
 
-**Desde VS Code:** abrir `src/app/Main.java` y presionar **Run** encima de `main`.
+**Desde VS Code:** abrir el archivo y presionar **Run** encima de `main`.
 
-**Desde la terminal (PowerShell, en la carpeta del proyecto):**
+**Desde la terminal (PowerShell, en la carpeta del proyecto):** primero compilar todo una vez:
 ```powershell
 javac -d bin (Get-ChildItem -Recurse src -Filter *.java).FullName
-java -cp bin app.Main
 ```
+Luego ejecutar lo que se necesite:
 
-**Desde la terminal (Mac/Linux):**
-```bash
-javac -d bin $(find src -name "*.java")
-java -cp bin app.Main
-```
+| Comando | Qué hace |
+|---|---|
+| `java -cp bin app.Main` | Menú principal (reducción, resolver y comparar, complejidad) |
+| `java -cp bin pruebas.PruebasFuncionales` | 14 casos con resultado esperado (SÍ, NO, vacío, completo, k = 0, k > n) |
+| `java -cp bin pruebas.PruebasEquivalencia` | 4950 grafos aleatorios: comprueba que CLIQUE y VERTEX COVER responden igual |
+| `java -cp bin experimentos.Experimento` | Mide tiempos y guarda `resultados/experimento.csv` (ver `resultados/HOW_TO_MAKE_EXPERIMENTS.md`) |
 
-Demos rápidas (sin menú): `app.DemoGrafo` y `app.DemoReduccion`.
+**Mac/Linux:** compilar con `javac -d bin $(find src -name "*.java")` y usar los mismos comandos `java`.
+
+> Si VS Code marca errores en rojo después de un Pull: `Ctrl + Shift + P` → **Java: Clean Java Language Server Workspace** → **Reload and delete**.
+
+---
+
+## Resultados de las pruebas
+
+- `PruebasFuncionales`: **14 de 14** casos correctos.
+- `PruebasEquivalencia`: **4950 instancias, 0 discrepancias**. La reducción preservó la respuesta en todos los casos.
 
 ---
 
 ## Estado del proyecto
 
 - [x] Estructura del repositorio y reglas del equipo — James Caiño
-- [x] `Grafo` — James Caiño
-- [x] `Reduccion` y `GeneradorGrafos` — James Caiño
-- [ ] Menú `Main` y `Validador` — James Caiño (listo; falta la opción 6, que se completa al integrar el trabajo de Emanuel)
-- [ ] `ResolvedorClique`, `ResolvedorVertexCover`, `Verificador` — Emanuel Encalada
-- [ ] Pruebas de equivalencia — Emanuel Encalada
-- [ ] `Benchmark` y experimentos — Eduardo Fogacho
-- [ ] Informe y presentación — Kevin Ramirez
+- [x] `Grafo`, `Reduccion`, `GeneradorGrafos` — James Caiño
+- [x] Menú `Main` y `Validador` — James Caiño
+- [x] `ResolvedorClique`, `ResolvedorVertexCover`, `Verificador` — Emanuel Encalada
+- [x] Pruebas funcionales y de equivalencia — Emanuel Encalada
+- [x] Experimentos y medición de tiempos — Eduardo Fogacho
+- [ ] Informe técnico y presentación — todo el equipo (coordina Matías Chushig)

@@ -146,7 +146,9 @@ public class Main {
         System.out.println("=== INSTANCIA DE VERTEX COVER: (complemento de G, k' = " + n + " - " + k + " = " + kPrima + ") ===");
         mostrarGrafo(complemento);
         System.out.printf("Tiempo de la reducción: %.4f ms  (complejidad Theta(n^2))%n", (fin - inicio) / 1_000_000.0);
-    }
+        System.out.println("Pregunta equivalente: ¿G tiene un clique de tamaño >= " + k
+            + "?  <=>  ¿el complemento tiene una cobertura de tamaño <= " + kPrima + "?");
+        }
 
     /**
      * Opción 6: resuelve CLIQUE(G, k) y VERTEX COVER(complemento, n - k),
@@ -230,15 +232,17 @@ public class Main {
     }
 
     /** Opción 7: muestra un resumen de la complejidad de cada parte. */
-    private static void mostrarComplejidad() {
-        System.out.println("=== COMPLEJIDAD TEÓRICA (n = vértices) ===");
-        System.out.println("Reducción (construir complemento): tiempo Theta(n^2), espacio Theta(n^2)");
+        private static void mostrarComplejidad() {
+        System.out.println("=== COMPLEJIDAD TEÓRICA (n = vértices, m = aristas) ===");
+        System.out.println("Reducción (construir complemento):  tiempo Theta(n^2), espacio Theta(n^2)");
         System.out.println("   -> revisa cada uno de los n(n-1)/2 pares de vértices una vez.");
-        System.out.println("Transformar k en k' = n - k:        tiempo Theta(1)");
-        System.out.println("Consultar una arista (matriz):      tiempo Theta(1)");
-        System.out.println("Resolver CLIQUE por fuerza bruta:   O(C(n,k) * k^2) -> en el peor caso exponencial, O(2^n * n^2)");
-        System.out.println("Resolver VERTEX COVER (fuerza bruta): O(2^n * n^2) en el peor caso");
-        System.out.println("Verificar una solución dada:        tiempo polinómico, O(n^2)");
+        System.out.println("Transformar k en k' = n - k:         tiempo Theta(1)");
+        System.out.println("Consultar una arista (matriz):       tiempo Theta(1)");
+        System.out.println("Resolver CLIQUE (backtracking):      O(2^n * k) en el peor caso, espacio O(n + k)");
+        System.out.println("Resolver VERTEX COVER (ramificación): O(2^k * m); en el peor caso O(2^n * n^2), espacio O(n + m)");
+        System.out.println("   -> en la opción 6 se resuelve con k' = n - k sobre el complemento.");
+        System.out.println("Verificar un clique dado:            O(s^2), s = vértices de la solución");
+        System.out.println("Verificar una cobertura dada:        Theta(n^2)");
         System.out.println();
         System.out.println("Conclusión: transformar es barato (polinómico); resolver es caro (exponencial).");
     }
